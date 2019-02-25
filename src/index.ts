@@ -46,7 +46,7 @@ const vrtest = async () => {
 
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(chalk.green(`Snapping ${file}`));
-    await page.goto(`http://localhost:36000/${file}`);
+    await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     await percySnapshot(page, file)
     console.log(chalk.green(`Done snapping ${file}`));
   });
