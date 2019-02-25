@@ -3,5 +3,8 @@ module.exports = {
   ignoreFiles: [
     'browserSupport.html',
     'index.html'
+  ],
+  screenWidths: [
+    320
   ]
 };

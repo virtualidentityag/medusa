@@ -49,7 +49,7 @@ const vrtest = async () => {
     console.log(chalk.green(`Snapping ${file}`));
     await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
     await sleep(2000);
-    await percySnapshot(page, file);
+    await percySnapshot(page, file, { widths: config.widths });
     console.log(chalk.green(`Done snapping ${file}`));
   });
 
