@@ -8,6 +8,7 @@ import chalk from 'chalk';
 import * as StaticServer from 'static-server';
 import getAllHtmlPagesInFolder from './getAllPagesInFolder';
 import asyncForEach from './asyncForeach';
+import sleep from './sleep';
 const pjson = require('../package.json');
 const defaultConfig = require('../config.default.js');
 
@@ -47,7 +48,8 @@ const vrtest = async () => {
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(chalk.green(`Snapping ${file}`));
     await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await percySnapshot(page, file)
+    await sleep(2000);
+    await percySnapshot(page, file);
     console.log(chalk.green(`Done snapping ${file}`));
   });
 
