@@ -37,12 +37,14 @@ const vrtest = async () => {
   });
   const page = await browser.newPage()
 
-  return asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
+  await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(chalk.green(`Snapping ${file}`));
     await page.goto(`http://localhost:36000/${file}`);
     await percySnapshot(page, file)
     console.log(chalk.green(`Done snapping ${file}`));
   });
+
+  browser.close();
 }
 
 const percyAgent = new AgentService();
