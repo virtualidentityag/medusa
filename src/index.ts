@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as commander from 'commander';
 import * as puppeteer from 'puppeteer';
+import tryRequire from 'try-require';
 import AgentService from '@percy/agent/dist/services/agent-service';
 import { percySnapshot } from '@percy/puppeteer';
 import chalk from 'chalk';
@@ -17,7 +18,13 @@ commander
   .version(pjson.version, '-v, --version')
   .parse(process.argv);
 
-const cfgFile = commander.config ? require(path.join(process.cwd(), commander.config)) : require(path.join(process.cwd(), 'medusa.json'));
+
+let cfgFile
+if (commander.config) {
+  cfgFile = tryRequire(path.join(process.cwd(), commander.config));
+} else {
+  cfgFile = tryRequire(path.join(process.cwd(), 'medusa.json'));
+}
 
 const config = {
   ...defaultConfig,

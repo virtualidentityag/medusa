@@ -18,7 +18,8 @@
     "@percy/puppeteer": "^1.0.5",
     "commander": "^2.19.0",
     "puppeteer": "^1.12.2",
-    "static-server": "^2.2.1"
+    "static-server": "^2.2.1",
+    "try-require": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^11.9.5",
