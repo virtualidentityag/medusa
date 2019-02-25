@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as commander from 'commander';
 import * as puppeteer from 'puppeteer';
-import tryRequire from 'try-require';
+import * as tryRequire from 'try-require';
 import AgentService from '@percy/agent/dist/services/agent-service';
 import { percySnapshot } from '@percy/puppeteer';
 import chalk from 'chalk';
