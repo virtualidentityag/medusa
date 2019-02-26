@@ -43,7 +43,7 @@ The config file can set the following values:
 
 
 ## Hide markup
-Medusa brings its own CSS class which helps you to hide elements in the visual regression test. To hide an element just ass the class `hide-in-medusa` to it:
+Medusa brings its own CSS class which helps you to hide elements in the visual regression test. To hide an element just add the class `hide-in-medusa` to it:
 ```html
 <div class="hide-in-medusa">...</div>
 ```
