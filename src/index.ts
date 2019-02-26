@@ -4,7 +4,6 @@ import * as puppeteer from 'puppeteer';
 import * as tryRequire from 'try-require';
 import AgentService from '@percy/agent/dist/services/agent-service';
 import { percySnapshot } from '@percy/puppeteer';
-import chalk from 'chalk';
 import * as StaticServer from 'static-server';
 import getAllHtmlPagesInFolder from './getAllPagesInFolder';
 import asyncForEach from './asyncForeach';
@@ -58,7 +57,7 @@ const vrtest = async () => {
 
 
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
-    console.log(chalk.green(`Snapping ${file}`));
+    console.log(`Snapping ${file}`);
     try {
       await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.addStyleTag({ content: '.hide-in-medusa {visibility: hidden !important;opacity: 0 !important;}' });
@@ -68,7 +67,7 @@ const vrtest = async () => {
       console.log(error);
       return;
     }
-    console.log(chalk.green(`Done snapping ${file}`));
+    console.log(`Done snapping ${file}`);
   });
   try {
     await browser.close();
