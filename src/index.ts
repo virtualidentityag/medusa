@@ -39,34 +39,56 @@ const server = new StaticServer({
 });
 
 const vrtest = async () => {
-  const browser = await puppeteer.launch({
-    headless: true,
-    timeout: 10000,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox'
-    ],
-  });
-  const page = await browser.newPage()
+  let browser = null;
+  let page = null;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      timeout: 10000,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox'
+      ],
+    });
+    page = await browser.newPage()
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+
 
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(chalk.green(`Snapping ${file}`));
-    await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await page.addStyleTag({ content: '.hide-in-medusa {visibility: hidden !important;opacity: 0 !important;}' });
-    await sleep(2000);
-    await percySnapshot(page, file, { widths: config.screenWidths, enableJavaScript: true });
+    try {
+      await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+      await page.addStyleTag({ content: '.hide-in-medusa {visibility: hidden !important;opacity: 0 !important;}' });
+      await sleep(2000);
+      await percySnapshot(page, file, { widths: config.screenWidths, enableJavaScript: true });
+    } catch (error) {
+      console.log(error);
+      return;
+    }
     console.log(chalk.green(`Done snapping ${file}`));
   });
+  try {
+    await browser.close();
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 
-  browser.close();
 }
 
 const percyAgent = new AgentService();
 server.start(async () => {
   console.log('Server listening to', server.port);
-  await percyAgent.start({ port: 5338 });
-  await vrtest();
-  await percyAgent.stop();
+  try {
+    await percyAgent.start({ port: 5338 });
+    await vrtest();
+    await percyAgent.stop();
+  } catch (error) {
+    console.log(error)
+  }
   server.stop();
   process.exit();
 });
