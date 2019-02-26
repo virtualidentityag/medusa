@@ -48,5 +48,8 @@ Medusa brings its own CSS class which helps you to hide elements in the visual r
 <div class="hide-in-medusa">...</div>
 ```
 
+## Handle Animations
+It's recommended to hide animated components or add them to the ignore list, because it can't be guaranteed that the animations are captured at the same state of animation each time, this causes diffs in the snapshots where really are none.
+
 ## Different Environments
 The simpelest way to have different environments 
