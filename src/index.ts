@@ -39,7 +39,6 @@ const server = new StaticServer({
 
 const vrtest = async () => {
   let browser = null;
-  let page = null;
   try {
     browser = await puppeteer.launch({
       headless: true,
@@ -49,7 +48,6 @@ const vrtest = async () => {
         '--disable-setuid-sandbox'
       ],
     });
-    page = await browser.newPage()
   } catch (error) {
     console.log(error);
     return;
@@ -59,13 +57,14 @@ const vrtest = async () => {
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(`Snapping ${file}`);
     try {
+      const page = await browser.newPage()
       await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
       await page.addStyleTag({ content: '.hide-in-medusa {visibility: hidden !important;opacity: 0 !important;}' });
       await sleep(2000);
       await percySnapshot(page, file, { widths: config.screenWidths, enableJavaScript: true });
+      await page.close();
     } catch (error) {
       console.log(error);
-      return;
     }
     console.log(`Done snapping ${file}`);
   });
