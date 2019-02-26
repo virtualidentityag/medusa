@@ -1,6 +1,6 @@
 # Medusa 🐍
 
-Medusa is a simple connector to help you use [Percy.io](https://percy.io) with puppeteer in you project.
+Medusa is a simple connector to help you use [Percy.io](https://percy.io) with puppeteer in your project.
 
 ## Installation
 `npm i @virtualidentity/medusa --save-dev`
