@@ -48,6 +48,7 @@ const vrtest = async () => {
   await asyncForEach(getAllHtmlPagesInFolder(targetFolder, config.ignoreFiles), async file => {
     console.log(chalk.green(`Snapping ${file}`));
     await page.goto(`http://localhost:36000/${file}`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    await page.addStyleTag({ content: '.hide-in-medusa {visibility: hidden !important;opacity: 0 !important;}' });
     await sleep(2000);
     await percySnapshot(page, file, { widths: config.screenWidths, enableJavaScript: true });
     console.log(chalk.green(`Done snapping ${file}`));
