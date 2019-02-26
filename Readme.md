@@ -33,7 +33,8 @@ medusa --config path/to/config.json
 ```
 This defaults to `medusa.json`.
   
-The config file can set the following values:
+The config file can set the following values:  
+  
 | Name           | Description                                      | Default |
 |----------------|--------------------------------------------------|---------|
 | `targetDir`    | The directory where to search for `.html` files. | `dist`  |
