@@ -43,11 +43,8 @@ const vrtest = async () => {
     headless: true,
     timeout: 10000,
     args: [
-      '--disable-dev-shm-usage',
-      '--disable-gpu',
-      '--single-process',
-      '--no-zygote',
-      '--no-sandbox'
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
     ],
   });
   const page = await browser.newPage()
