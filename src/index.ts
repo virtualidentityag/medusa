@@ -41,7 +41,14 @@ const server = new StaticServer({
 const vrtest = async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    timeout: 10000
+    timeout: 10000,
+    args: [
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--single-process',
+      '--no-zygote',
+      '--no-sandbox'
+    ],
   });
   const page = await browser.newPage()
 
